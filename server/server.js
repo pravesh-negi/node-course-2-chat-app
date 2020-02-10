@@ -14,9 +14,33 @@ var io=socketIO(server);
 app.use(express.static(publicPath));
 
  // It lets you register an event listener.we can listen for a specific event and do something when that event happens.
+ // so io.on use for connection event
 io.on('connection',(socket)=>{
-    // if we reload the http://localhost:3000/ in browser or press ctrl+s then message will print in terminal says 'New user connected'.
+    // If we reload the http://localhost:3000/ in browser or press ctrl+s then message will print in terminal says 'New user connected'.
     console.log('New user connected');
+
+    // // this will emait newEmail in index.js page :-:-event is emitted from server to client(index.js)
+    // socket.emit('newEmail',{
+    //     from:'pravesh@example.com',
+    //     text:'Hey.What is going on',
+    //     createAt:123
+    // });
+ 
+    socket.emit('newMessage',{
+        from:'pravesh@example.com',
+        text:'Hey.What is going on',
+        createdAt:123
+    });
+
+
+
+    // socket.on('createEmail',(newEmail)=>{
+    //     console.log('createEmail',newEmail);
+    // });
+
+    socket.on('createMessage',(message)=>{
+        console.log('createMessage',message);
+    });
 
     // if we close the browser then this message will print in terminal says User was disconnected.
     socket.on('disconnect',()=>{
