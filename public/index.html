@@ -7,6 +7,23 @@
 
     <body>
         <p>Welcome to the chat app</p>
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+            var socket=io();
+            // if we reload the http://localhost:3000/ in browser   then message will print in console says 'Connected to server'.
+            socket.on("connect",()=>{
+                console.log('Connected to server');
+            });
+
+            //Event system in socket .IO :-
+            // when we prese ctrl+c then 'Disconnected from server' message print in the browser. 
+            // OR When we press ctrl+s then first 'Disconnected from server' message will print then
+            // 'Connected to server' message will print.
+            socket.on("disconnect",()=>{
+                console.log('Disconnected from server');
+            });
+
+        </script>
     </body>
 
 </html>
