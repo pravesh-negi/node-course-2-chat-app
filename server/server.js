@@ -26,13 +26,11 @@ io.on('connection',(socket)=>{
     //     createAt:123
     // });
  
-    socket.emit('newMessage',{
-        from:'pravesh@example.com',
-        text:'Hey.What is going on',
-        createdAt:123
-    });
-
-
+    // socket.emit('newMessage',{
+    //     from:'pravesh@example.com',
+    //     text:'Hey.What is going on',
+    //     createdAt:123
+    // }); 
 
     // socket.on('createEmail',(newEmail)=>{
     //     console.log('createEmail',newEmail);
@@ -40,6 +38,18 @@ io.on('connection',(socket)=>{
 
     socket.on('createMessage',(message)=>{
         console.log('createMessage',message);
+
+        // it will emits an event to every single connection here. or send the message to every connected user 
+        // including the currently connected user.
+        // i.e :- we have to open http://localhost:3000/  url in two tab of browser and then in console type the emit message like
+        // socket.emit('createMessage',{from:'Andrew',text:'Yup,that work for me.'});
+        // with this we got this message in two open tab of browser.  
+        
+        io.emit('newMessage',{
+            from:message.from,
+            text:message.text,
+            createdAt:new Date().getTime()
+        }); 
     });
 
     // if we close the browser then this message will print in terminal says User was disconnected.

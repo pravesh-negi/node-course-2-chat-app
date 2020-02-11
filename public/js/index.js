@@ -10,10 +10,10 @@ socket.on("connect",function(){ // normal jquery syntax.
 //         text:'Hey. This is Andrew.'
 //     });
 
-        socket.emit('createMessage',{
-            from:'Andrew',
-            text:'Yup,that work for me.'
-        });
+        // socket.emit('createMessage',{
+        //     from:'Andrew',
+        //     text:'Yup,that work for me.'
+        // });
 });
 
 
