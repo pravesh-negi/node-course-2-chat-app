@@ -19,6 +19,25 @@ io.on('connection',(socket)=>{
     // If we reload the http://localhost:3000/ in browser or press ctrl+s then message will print in terminal says 'New user connected'.
     console.log('New user connected');
 
+    // socket.emit from Admin text welcome to the chat app
+    // when we load the url :-http://localhost:3000/ then this message will print.and this tab of browser will be admin her.
+    socket.emit('newMessage',{
+            from:'Admin',
+            text:'Welcome to the chat app',
+            createdAt:new Date().getTime()
+        });
+
+    // socket.broadcast.emit from Admin text New user joined.
+    // when we load the url http://localhost:3000/ in second tab then we will get the 'Welcome to the chat app'
+    // message from above emit of socket then in first tab we got another message like New user joined
+    socket.broadcast.emit('newMessage',{
+        from:'Admin',
+        text:'New user joined',
+        createdAt:new Date().getTime()
+    }); 
+
+    //---------------------------------
+
     // // this will emait newEmail in index.js page :-:-event is emitted from server to client(index.js)
     // socket.emit('newEmail',{
     //     from:'pravesh@example.com',
@@ -39,17 +58,28 @@ io.on('connection',(socket)=>{
     socket.on('createMessage',(message)=>{
         console.log('createMessage',message);
 
-        // it will emits an event to every single connection here. or send the message to every connected user 
-        // including the currently connected user.
-        // i.e :- we have to open http://localhost:3000/  url in two tab of browser and then in console type the emit message like
-        // socket.emit('createMessage',{from:'Andrew',text:'Yup,that work for me.'});
-        // with this we got this message in two open tab of browser.  
+        // // it will emits an event to every single connection here. or send the message to every connected user 
+        // // including the currently connected user.
+        // // i.e :- we have to open http://localhost:3000/  url in two tab of browser and then in console type the emit message like
+        // // socket.emit('createMessage',{from:'Andrew',text:'Yup,that work for me.'});
+        // // with this we got this message in two open tab of browser.  
         
         io.emit('newMessage',{
             from:message.from,
             text:message.text,
             createdAt:new Date().getTime()
         }); 
+
+        // // let say second tab of browser broadcasting the event which means it only got received by other connection 
+        // // such as tab one or any other connected user with broadcasting in place.
+
+        // socket.broadcast.emit('newMessage',{
+        //     from:message.from,
+        //     text:message.text,
+        //     createdAt:new Date().getTime()
+        // }); 
+
+
     });
 
     // if we close the browser then this message will print in terminal says User was disconnected.
